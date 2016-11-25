@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Blog</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+  <div id="sidebar">
+    <div id="logo">
+      <%=link_to root_path do%>
+      <%=image_tag "Winter_Is_Coming.png"%>
+      <% end %>
+    </div>
+    <ul>
+      <li><%=link_to "Blog",root_path %></li>
+      <li><%=link_to "About","/about"%></li>
+    </ul>
+    <ul>
+      <li class="category">Social</li>
+      <li><a href="https://www.facebook.com/ankush.malik.5680">Facebook</a></li>
+      <li><a href="https://twitter.com/iamankushmalik">Twitter</a></li>
+      <li><a href="https://www.instagram.com/iam.ankush/">Instagram</a></li>
+    </ul>
+    <% if !user_signed_in?%>
+    <p class="sign_in">
+      <%= link_to "Admin_Login",new_user_session_path%>
+    </p>
+    <%end%>
+  </div>
+
+  <div id="main_content">
+    <div id="header">
+      <%if current_page?(root_path)%>
+      <p>All Posts</p>
+      <%elsif current_page?(about_path)%>
+      <p>About Page</p>
+      <%else%>
+      <%= link_to"Back",root_path,class:"button"%>
+      <%end%>
+      <%if user_signed_in? %>
+        <div class="buttons">
+          <button class="button"><%= link_to "New Post",new_post_path%></button>
+          <button class="button"><%= link_to "Log Out",destroy_user_session_path,method: :delete%></button>
+        </div>
+      <%end%>
+    </div>
+    <%flash.each do|name,msg|%>
+      <%= content_tag(:div,msg,class: "alert")%>
+    <% end %>
+    <%= yield %>
+  </div>
+
+</body>
+</html>

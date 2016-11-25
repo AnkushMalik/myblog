@@ -1,0 +1,19 @@
+<div id="post_content">
+  <h1 class="title">
+    <%=@post.title%>
+  </h1>
+  <h6 class="date">
+    created <%=time_ago_in_words(@post.created_at)%> ago |
+    <%= link_to "Edit",edit_post_path(@post)%> |
+    <%=link_to "delete",@post,method: :delete,data: {confirm: "are you sure?"}%>
+  </h6><br>
+  <p class="body">
+    <%=@post.content%>
+  </p><br>
+  <div id="comments">
+    <h2><%=pluralize(@post.comments.count,"Comments")%></h2>
+    <%= render @post.comments %>
+    <h3>Add a comment:</h3>
+    <%= render "comments/form"%>
+  </div>
+</div>
